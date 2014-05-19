@@ -1,0 +1,33 @@
+{
+  "name": "knockout-data",
+  "version": "0.0.1",
+  "description": "JSON data <> knockout observable bridge",
+  "license": "MPL-2.0",
+  "main": "index.js",
+
+  "authors": [
+    "Gareth Aye [:gaye] <gaye@mozilla.com>"
+  ],
+
+  "keywords": [
+    "knockout",
+    "model",
+    "mvvm"
+  ],
+
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+
+  "dependencies": {
+    "knockout": "3.1.x"
+  },
+
+  "devDependencies": {
+    "chai": "1.9.1",
+    "mocha": "1.19.0",
+    "requirejs": "2.1.11"
+  }
+}
