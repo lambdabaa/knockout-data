@@ -41,7 +41,7 @@ Post.properties = {
 };
 ```
 
-Then suppose further that you were loading your model data from a JSON source/API. If you're using [knockoutjs](http://knockoutjs.com/) and you'd like to
+Then suppose further that you load your model data from a JSON source/API. If you're using [knockoutjs](http://knockoutjs.com/) and you'd like to
 
 + make all of your json objects' properties "ko.observable()"
 + interact with `User`, `Post`, and `Comment` like objects with niceties like instance methods
