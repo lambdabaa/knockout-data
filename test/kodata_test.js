@@ -91,9 +91,16 @@ suite('kodata', function() {
       assert.strictEqual(post.author.yellName(), 'GARETH!');
     });
 
-    test('should play nice with computed values', function() {
+    test('should play nice with computed values', function(done) {
       var post = kodata.fromJSONValue(Post, data);
       assert.strictEqual(post.commentCount(), 2);
+
+      post.commentCount.subscribe(function(newValue) {
+        assert.strictEqual(newValue, 3);
+        done();
+      });
+
+      post.comments.push(new Comment());
     });
   });
 
