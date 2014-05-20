@@ -3,6 +3,8 @@ knockout-data
 
 JSON data <> knockout observable bridge
 
+[Live test suite!](https://gaye.github.io/knockout-data/test/)
+
 ### Motivation
 
 Suppose you defined your models in the following way...
