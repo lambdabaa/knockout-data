@@ -47,7 +47,7 @@ function fromJSONValue(model, data) {
     }
 
     result[key] = metadata.multiple ?
-      value.map(hydrate.bind(this, metadata)) :
+      value.map(function(item) { return hydrate(metadata, item); }) :
       hydrate(metadata, value);
   });
 
@@ -102,14 +102,14 @@ function toJSONValue(model, instance) {
  * @private
  */
 function hydrate(metadata, value) {
-  switch (metadata.constructor) {
+  switch (metadata.model) {
     case Boolean:
     case Number:
     case String:
       return ko.observable(value);
     default:
       // "Recurse".
-      return fromJSONValue(metadata.constructor, value);
+      return fromJSONValue(metadata.model, value);
   }
 }
 
@@ -117,14 +117,14 @@ function hydrate(metadata, value) {
  * @private
  */
 function dehydrate(metadata, value) {
-  switch (metadata.constructor) {
+  switch (metadata.model) {
     case Boolean:
     case Number:
     case String:
       return value();  // observable => value
     default:
       // "Recurse".
-      return toJSONValue(metadata.constructor, value);
+      return toJSONValue(metadata.model, value);
   }
 }
 
