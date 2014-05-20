@@ -32,7 +32,12 @@ Post.properties = {
 };
 ```
 
-Then suppose further that you were loading your model data from a JSON source/API. If you're using [knockoutjs](http://knockoutjs.com/) and you'd like to interact with `User`, `Post`, and `Comment` like objects with niceties like instance methods, then `kodata` is just what you need!
+Then suppose further that you were loading your model data from a JSON source/API. If you're using [knockoutjs](http://knockoutjs.com/) and you'd like to
+
++ make all of your json objects' properties "ko.observable()"
++ interact with `User`, `Post`, and `Comment` like objects with niceties like instance methods
+
+then `kodata` is just what you need!
 
 ### Usage
 
