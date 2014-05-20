@@ -24,7 +24,7 @@
  *    console.log(person instanceof Person);  // true
  */
 function fromJSONValue(model, data) {
-  var result = new model();
+  var values = {};
 
   var properties = model.properties;
   Object.keys(properties).forEach(function(key) {
@@ -32,7 +32,7 @@ function fromJSONValue(model, data) {
         value = data[key];
 
     if (!key in data) {
-      result[key] = metadata.multiple ?
+      values[key] = metadata.multiple ?
         ko.observableArray() :
         ko.observable();
       return;
@@ -47,12 +47,21 @@ function fromJSONValue(model, data) {
     }
 
     if (metadata.multiple) {
-      result[key] = ko.observableArray();
+      values[key] = ko.observableArray();
       value.forEach(function(item) {
-        result[key].push(hydrate(metadata, item));
+        values[key].push(hydrate(metadata, item));
       });
     } else {
-      result[key] = hydrate(metadata, value);
+      values[key] = hydrate(metadata, value);
+    }
+  });
+
+  var result = new model();
+  Object.keys(values).forEach(function(key) {
+    if (key in result) {
+      result[key](values[key]());  // Set observable value.
+    } else {
+      result[key] = values[key];
     }
   });
 

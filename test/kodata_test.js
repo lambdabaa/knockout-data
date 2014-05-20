@@ -1,4 +1,5 @@
 var assert = require('chai').assert,
+    ko = require('ko'),
     kodata = require('kodata');
 
 suite('kodata', function() {
@@ -22,7 +23,15 @@ suite('kodata', function() {
     };
 
     Post = function Post() {
+      this.commentCount = ko.computed(function() {
+        if (!this.comments) {
+          return 0;
+        }
+
+        return this.comments().length;
+      }.bind(this));
     };
+    Post.prototype.comments = ko.observableArray();
     Post.properties = {
       author: { multiple: false, model: User },
       body: { multiple: false, model: String },
@@ -80,6 +89,11 @@ suite('kodata', function() {
       var post = kodata.fromJSONValue(Post, data);
       var user = post.author;
       assert.strictEqual(post.author.yellName(), 'GARETH!');
+    });
+
+    test('should play nice with computed values', function() {
+      var post = kodata.fromJSONValue(Post, data);
+      assert.strictEqual(post.commentCount(), 2);
     });
   });
 
