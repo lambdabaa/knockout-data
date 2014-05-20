@@ -32,4 +32,16 @@ Post.properties = {
 };
 ```
 
-Then suppose further that you were loading your model data from a JSON source/API. If you're using knockoutjs and you'd like to interact with `User`, `Post`, and `Comment` like objects with nice things like instance methods, then `kodata` is just what you need!
+Then suppose further that you were loading your model data from a JSON source/API. If you're using [knockoutjs](http://knockoutjs.com/) and you'd like to interact with `User`, `Post`, and `Comment` like objects with niceties like instance methods, then `kodata` is just what you need!
+
+### Usage
+
+#### kodata.fromJSONValue(model, data)
+
+Hydrates json data into an instance of model.
+
+#### kodata.toJSONValue(model, instance)
+
+Dehydrates an instance of model into json data.
+
+See the [test suite](https://github.com/gaye/knockout-data/tree/master/test) for fuller examples of how to use `kodata`.
