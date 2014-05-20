@@ -9,13 +9,20 @@ Suppose you defined your models in the following way...
 
 ```js
 function User() {
+  this.yellName = function() {
+    return this.name().toUpperCase() + '!';
+  };
 }
 User.properties = {
   name: { multiple: false, model: String }
 };
 
 function Comment() {
+  this.commentLength = ko.computed(function() {
+    return this.body().length;
+  }.bind(this));
 }
+Comment.prototype.body = ko.observable();
 Comment.properties = {
   author: { multiple: false, model: User },
   body: { multiple: false, model: String }
