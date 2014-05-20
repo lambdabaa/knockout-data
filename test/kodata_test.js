@@ -6,6 +6,9 @@ suite('kodata', function() {
 
   setup(function() {
     User = function User() {
+      this.yellName = function() {
+        return this.name().toUpperCase() + '!';
+      };
     };
     User.properties = {
       name: { multiple: false, model: String }
@@ -71,6 +74,12 @@ suite('kodata', function() {
     test('should not modify input data', function() {
       var postData = Object.freeze(data);
       kodata.fromJSONValue(Post, postData);
+    });
+
+    test('should create object that responds to instance methods', function() {
+      var post = kodata.fromJSONValue(Post, data);
+      var user = post.author;
+      assert.strictEqual(post.author.yellName(), 'GARETH!');
     });
   });
 
