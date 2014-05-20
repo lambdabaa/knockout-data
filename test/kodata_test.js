@@ -57,15 +57,15 @@ suite('kodata', function() {
       assert.instanceOf(post.author, User);
       assert.strictEqual(post.author.name(), 'Gareth');
       assert.strictEqual(post.body(), 'Hello, world!');
-      assert.isArray(post.comments);
-      assert.lengthOf(post.comments, 2);
-      assert.instanceOf(post.comments[0], Comment);
-      assert.instanceOf(post.comments[0].author, User);
-      assert.strictEqual(post.comments[0].author.name(), 'Alison');
-      assert.strictEqual(post.comments[0].body(), 'Hooray!');
-      assert.instanceOf(post.comments[1], Comment);
-      assert.strictEqual(post.comments[1].author.name(), 'Norma Dan');
-      assert.strictEqual(post.comments[1].body(), 'Welcome to Dollywood!');
+      assert.isArray(post.comments());
+      assert.lengthOf(post.comments(), 2);
+      assert.instanceOf(post.comments()[0], Comment);
+      assert.instanceOf(post.comments()[0].author, User);
+      assert.strictEqual(post.comments()[0].author.name(), 'Alison');
+      assert.strictEqual(post.comments()[0].body(), 'Hooray!');
+      assert.instanceOf(post.comments()[1], Comment);
+      assert.strictEqual(post.comments()[1].author.name(), 'Norma Dan');
+      assert.strictEqual(post.comments()[1].body(), 'Welcome to Dollywood!');
     });
 
     test('should not modify input data', function() {

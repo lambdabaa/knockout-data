@@ -43,7 +43,7 @@ then `kodata` is just what you need!
 
 #### kodata.fromJSONValue(model, data)
 
-Hydrates json data into an instance of model.
+Recursively hydrates json data into an instance of model, makes all `Boolean`, `String`, and `Number` properties observable. Resolves one-to-many relationship with observable arrays.
 
 #### kodata.toJSONValue(model, instance)
 

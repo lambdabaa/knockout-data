@@ -38,17 +38,22 @@ function fromJSONValue(model, data) {
       return;
     }
 
-    if (metadata.multiple !== Array.isArray(value)) {
+    if (metadata.multiple !== isMultiple(value)) {
       throw new Error(
         'Expected $1 but got $2'
           .replace('$1', metadata.multiple ? 'multiple' : 'one')
-          .replace('$2', Array.isArray(value) ? 'array' : 'not array')
+          .replace('$2', isMultiple(value) ? 'array' : 'not array')
       );
     }
 
-    result[key] = metadata.multiple ?
-      value.map(function(item) { return hydrate(metadata, item); }) :
-      hydrate(metadata, value);
+    if (metadata.multiple) {
+      result[key] = ko.observableArray();
+      value.forEach(function(item) {
+        result[key].push(hydrate(metadata, item));
+      });
+    } else {
+      result[key] = hydrate(metadata, value);
+    }
   });
 
   return result;
@@ -82,16 +87,16 @@ function toJSONValue(model, instance) {
     }
 
 
-    if (metadata.multiple !== Array.isArray(value)) {
+    if (metadata.multiple !== isMultiple(value)) {
       throw new Error(
         'Expected $1 but got $2'
           .replace('$1', metadata.multiple ? 'multiple' : 'one')
-          .replace('$2', Array.isArray(value) ? 'array' : 'not array')
+          .replace('$2', isMultiple(value) ? 'array' : 'not array')
       );
     }
 
     result[key] = metadata.multiple ?
-      value.map(dehydrate.bind(this, metadata)) :
+      multiple(value).map(dehydrate.bind(this, metadata)) :
       dehydrate(metadata, value);
   });
 
@@ -126,6 +131,28 @@ function dehydrate(metadata, value) {
       // "Recurse".
       return toJSONValue(metadata.model, value);
   }
+}
+
+/**
+ * @private
+ */
+function multiple(value) {
+  if (typeof value === 'function' && value.length === 0) {
+    return value();
+  }
+
+  return value;
+}
+
+/**
+ * @private
+ */
+function isMultiple(value) {
+  if (typeof value === 'function' && value.length === 0) {
+    return Array.isArray(value());
+  }
+
+  return Array.isArray(value);
 }
 
 exports.fromJSONValue = fromJSONValue;
